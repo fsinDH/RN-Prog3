@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { db, auth } from '../firebase/config';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { db, auth } from '../firebase/config';
+
 
 class Register extends Component {
 	constructor(props) {
@@ -44,10 +45,10 @@ class Register extends Component {
 
 	render() {
 		return (
-			<View>
+			<View style={styles.container}>
 				<Text>Registro</Text>
 				<View>
-					<TextInput style={styles.field} placeholder="email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
+					<TextInput style={styles.field} placeholder="Email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
 					<TextInput
 						style={styles.field}
 						placeholder="Nombre de usuario"
@@ -68,6 +69,14 @@ class Register extends Component {
 
 const styles = StyleSheet.create({
 	field: {},
+	container: {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems:'center',
+		height: '100%',
+		backgroundColor: 'red'
+	}
+	
 });
 
 export default Register;
