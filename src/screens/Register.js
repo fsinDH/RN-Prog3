@@ -10,6 +10,7 @@ class Register extends Component {
 			email: '',
 			pass: '',
 			nombreUsuario: '',
+			mensajeError: '',
 		};
 	}
 
@@ -40,7 +41,10 @@ class Register extends Component {
 						this.props.navigation.navigate('HomeMenu');
 					});
 			})
-			.catch((error) => console.log(error));
+			.catch((error) => 
+			{console.log(error) 
+			this.setState({mensajeError: error.message})}
+			);
 	}
 
 	render() {
@@ -48,7 +52,13 @@ class Register extends Component {
 			<View style={styles.container}>
 				<Text>Registro</Text>
 				<View>
-					<TextInput style={styles.field} placeholder="Email" keyboardType="email-address" onChangeText={(text) => this.setState({ email: text })} value={this.state.email} />
+					<TextInput 
+						style={styles.field} 
+						placeholder="Email" 
+						keyboardType="email-address" 
+						onChangeText={(text) => this.setState({ email: text })} 
+						value={this.state.email} 
+					/>
 					<TextInput
 						style={styles.field}
 						placeholder="Nombre de usuario"
@@ -56,11 +66,24 @@ class Register extends Component {
 						onChangeText={(text) => this.setState({ nombreUsuario: text })}
 						value={this.state.nombreUsuario}
 					/>
-					<TextInput style={styles.field} placeholder="password" keyboardType="default" secureTextEntry onChangeText={(text) => this.setState({ pass: text })} value={this.state.pass} />
+					<TextInput 
+						style={styles.field} 
+						placeholder="password" 
+						keyboardType="default" 
+						secureTextEntry 
+						onChangeText={(text) => this.setState({ pass: text })} 
+						value={this.state.pass} 
+					/>
+					{/* Muestra el estado de "mensajeError" */}
+					<Text>{this.state.mensajeError}</Text>
+
 					<Text onPress={() => this.props.navigation.navigate('Login')}>Ya tengo cuenta</Text>
+
 					<TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario)}>
 						<Text>Registrarme</Text>
 					</TouchableOpacity>
+
+
 				</View>
 			</View>
 		);
