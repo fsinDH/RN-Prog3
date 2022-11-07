@@ -10,6 +10,8 @@ class Register extends Component {
 			email: '',
 			pass: '',
 			nombreUsuario: '',
+			imageUser: '',
+			bio: '',
 			mensajeError: '',
 		};
 	}
@@ -23,7 +25,7 @@ class Register extends Component {
 	}
 	//Al registrar un user, queremos guardarlo en la db con nombre,biografia.
 
-	registerUser(email, pass, nombreUsuario) {
+	registerUser(email, pass, nombreUsuario, imageUser, bio) {
 		auth
 			.createUserWithEmailAndPassword(email, pass)
 			.then((res) => {
@@ -32,11 +34,16 @@ class Register extends Component {
 					.add({
 						email: email,
 						nombreUsuario: nombreUsuario,
+						imageUser: imageUser,
+						bio: bio,
 					})
 					.then((res) => {
 						this.setState({
 							email: '',
 							pass: '',
+							nombreUsuario: '',
+							imageUser: '',
+							bio: ''
 						});
 						this.props.navigation.navigate('HomeMenu');
 					});
@@ -61,29 +68,37 @@ class Register extends Component {
 					/>
 					<TextInput
 						style={styles.field}
-						placeholder="Nombre de usuario"
+						placeholder="User Name"
 						keyboardType="default"
 						onChangeText={(text) => this.setState({ nombreUsuario: text })}
 						value={this.state.nombreUsuario}
 					/>
 					<TextInput 
 						style={styles.field} 
-						placeholder="password" 
+						placeholder="Password" 
 						keyboardType="default" 
 						secureTextEntry 
 						onChangeText={(text) => this.setState({ pass: text })} 
 						value={this.state.pass} 
 					/>
+					<TouchableOpacity onPress={() => (this.state.imageUser)}> 
+						<Text>Image User </Text>
+					</TouchableOpacity>
+					<TextInput 
+						style={styles.field} 
+						placeholder="Description" 
+						keyboardType="default" 
+						onChangeText={(text) => this.setState({ bio: text })} 
+						value={this.state.bio} 
+					/>
 					{/* Muestra el estado de "mensajeError" */}
 					<Text>{this.state.mensajeError}</Text>
 
-					<Text onPress={() => this.props.navigation.navigate('Login')}>Ya tengo cuenta</Text>
+					<Text onPress={() => this.props.navigation.navigate('Login')}>Login</Text>
 
-					<TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario)}>
-						<Text>Registrarme</Text>
+					<TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.imageUser, this.state.bio)}>
+						<Text>Sing Up</Text>
 					</TouchableOpacity>
-
-
 				</View>
 			</View>
 		);
