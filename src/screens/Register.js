@@ -23,9 +23,14 @@ class Register extends Component {
 			}
 		});
 	}
-	//Al registrar un user, queremos guardarlo en la db con nombre,biografia.
 
+	//Al registrar un user, queremos guardarlo en la db con nombre,biografia.
 	registerUser(email, pass, nombreUsuario, imageUser, bio) {
+		if (email === "" && pass === "" && nombreUsuario === '' && bio === '' ) {	
+			return
+			this.setState({mensajeError: "Todas las casillas deben ser llenadas"})
+		} 
+		
 		auth
 			.createUserWithEmailAndPassword(email, pass)
 			.then((res) => {
