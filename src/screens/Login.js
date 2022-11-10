@@ -12,7 +12,9 @@ class Login extends Component {
 		};
 	}
 	loginUser(email, pass) {
-		if (email === "" && pass === "") {
+
+		// Chequeando que los campos no esten vacios
+		if (this.state.email === "" || this.state.pass === "") {
 			this.setState({mensajeError: "Todas las casillas deben ser llenadas"})	
 			return
 		} 

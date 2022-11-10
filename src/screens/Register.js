@@ -24,13 +24,16 @@ class Register extends Component {
 		});
 	}
 
-	//Al registrar un user, queremos guardarlo en la db con nombre,biografia.
+	
 	registerUser(email, pass, nombreUsuario, imageUser, bio) {
-		if (email === "" && pass === "" && nombreUsuario === '' && bio === '' ) {	
-			return
+
+		// Chequeando que los campos no esten vacios
+		if (this.state.email === "" || this.state.pass === "" || this.state.nombreUsuario === '' || this.state.bio === '' ) {	
 			this.setState({mensajeError: "Todas las casillas deben ser llenadas"})
+			return
 		} 
 		
+		// Al registrar un user, queremos guardarlo en la db con email, nombre, biografia e imagen.
 		auth
 			.createUserWithEmailAndPassword(email, pass)
 			.then((res) => {
