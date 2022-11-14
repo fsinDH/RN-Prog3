@@ -1,127 +1,73 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons'; 
-import { auth, db } from '../firebase/config'
-import firebase from 'firebase'
-
-export default class Post extends Component  {
-
-    constructor(props){
-        super(props)
-        this.state={
-            likes: [],
-            comments:[],
-            uri:''
-        }
-    }
-
-    componentDidMount(){
-        this.setState({
-            likes: this.props.post.data.likes || [],
-          })
-    }
-
-    borrarLikes() {
-        db.collection('posts').doc(this.props.post.id).update({
-            likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.displayName)
-        })
-        .then((res) => {
-            this.setState({
-                likes:this.props.post.data.likes
-            })
-        })
-        .catch(err => console.log(err))
-    }
-
-    likear(){
-        db.collection('posts').doc(this.props.post.id).update({
-            likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.displayName)
-        })
-        .then((res) => {
-            this.setState({
-                likes:this.props.post.data.likes
-            })
-        })
-        .catch(err => console.log(err))
-    }
-
-    comentar() {
-        console.log("comente")
-    }
-
-    render() {
-    return (
-        <>
-            <View style={styles.container}>
-                <Text style={styles.text2}><strong>@{this.props.post.data.owner}</strong></Text>
-                <Image 
-                    source={{uri:this.props.post.data.uri}}
-                    resizeMode="contain"
-                    style={styles.image}
-                
-                />
-                <Text style={styles.text}>{this.props.post.data.description}</Text>
+import React, { Component } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { auth, db } from '../firebase/config';
+import firebase from 'firebase';
 
 
-                {this.state.likes.includes(auth.currentUser.displayName)?
-                <View style={styles.container2}>
-                    <TouchableOpacity 
-                        onPress={(borrarLike)=>{this.borrarLikes(borrarLike)}}
-                      
-                    >
-                    <AntDesign name="heart" size={24} color="#552586" />
-                    </TouchableOpacity>
+class Post extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			cantidadDeLikes: this.props.post.data.likes.length,
+			myLike: false,
+		};
+	}
 
-                    <TouchableOpacity 
-                     style={styles.comment}
-                    onPress={(comment)=>{this.comentar(comment)}}
+	componentDidMount() {
+		if (this.props.post.data.likes.includes(auth.currentUser.email)) {
+			this.setState({
+				myLike: true,
+			});
+		}
+	}
 
-                    >
-                    <FontAwesome name="comment-o" size={24} color="black" />
-                    </TouchableOpacity>
+	like() {
+		//Agregar el email del user logueado en el array
+		db
+			.collection('posts')
+			.doc(this.props.post.id)
+			.update({
+				likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
+			})
+			.then(() =>
+				this.setState({
+					cantidadDeLikes: this.state.cantidadDeLikes + 1,
+					myLike: true,
+				})
+			)
+			.catch((error) => console.log(error));
+	}
 
-                </View>
+	unLike() {}
 
-                    
-                :
-                <View style={styles.container2}>
-                    <TouchableOpacity 
-                        onPress={(like)=>{this.likear(like)}}
-                        
-                    >
-                    
-                    <AntDesign name="hearto" size={24} color="black" />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity 
-                    style={styles.comment}
-                    onPress={(comment)=>{this.comentar(comment)}}
-
-                    >
-                    <FontAwesome name="comment-o" size={24} color="black" />
-                    </TouchableOpacity>
-                </View>
-                }
-                
-                {!this.state.likes.length?             
-                <Text style={styles.text} >No hay likes</Text>          
-                : this.state.likes.length == 1?              
-                <Text style={styles.text} >Le gusta a {this.state.likes.slice(-1)} </Text>             
-                :
-                <Text style={styles.text} >Le gusta a {this.state.likes.slice(-1)} {} y {this.state.likes.length -1} más</Text>
-            }
-
-            {!this.state.comments.length?
-            <Text style={styles.text} >No hay comentarios</Text>
-            : this.state.comments.length == 1?              
-            <Text style={styles.text} >Ver el comentario</Text>    
-            :
-            <Text style={styles.text} >Ver los {this.state.comments.length} comentarios</Text>
-            
-            }    
-            </View>
-        </>
-    )
+	render() {
+		return (
+			<View>
+				<Text>Post de: {this.props.post.data.owner}</Text>
+				<Text>Texto del Post: {this.props.post.data.description}</Text>
+				<Image></Image>
+				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
+				{this.state.myLike ? (
+					<TouchableOpacity onPress={() => this.unLike()}>
+						<Text>Quitar Like</Text>
+					</TouchableOpacity>
+				) : (
+					<TouchableOpacity onPress={() => this.like()}>
+						<Text>Like</Text>
+					</TouchableOpacity>
+				)}
+			</View>
+		);
+	}
 }
-}   
+
+const styles = StyleSheet.create({
+	separator: {
+		borderBottomColor: '#ddd',
+		borderBottomWidth: 1,
+		marginBottom: 10,
+		paddingHorizontal: 20,
+	},
+});
+
+export default Post;

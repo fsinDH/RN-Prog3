@@ -14,14 +14,21 @@ class Home extends Component {
 	}
 
 	componentDidMount() {
-		db.collection('users').onSnapshot((docs) => {
-			let usersFromDb = [];
-			docs.forEach((doc) => {
-				let user = doc.data();
-				usersFromDb.push({ id: doc.id, data: user });
-				console.log(usersFromDb);
+		db.collection('posts').onSnapshot(
+			docs => {
+			let posts = [];
+			docs.forEach( doc => {
+				/* let user = doc.data(); */
+				posts.push({ 
+					id: doc.id, 
+					data: doc.data() 
+				});
+			
 			});
-			this.setState({ users: usersFromDb });
+			this.setState({ 
+				posts: posts,
+				loading: false
+			});
 		});
 	}
 
@@ -31,7 +38,7 @@ class Home extends Component {
 				<Text> Mi Home </Text>
 				<FlatList 
 					data={this.state.posts}
-					keyExtractor={ post => [post].id}
+					keyExtractor={ post => post.id}
 					renderItem={({item})=> <Post post={item}/>}
 				/>
 			</>
