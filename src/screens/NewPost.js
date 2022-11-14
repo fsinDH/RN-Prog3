@@ -53,16 +53,23 @@ class NewPost extends Component {
 
         db.collection('posts')
         .add({
-            owner: auth.currentUser.email,
+            owner: auth.currentUser.displayName,
             bio: this.state.bio,
             createdAt: Date.now(),
             uri:this.state.uri,
             likes:[],
             comments:[],
         })
-        .then()
-        .catch(e => console.log(e))
+        .then((res)=>{
+            console.log('posteo exitoso')
+            this.setState({
+                description:'',
+                showCamera: true
+            },()=>this.props.navigation.navigate('Home')
+            )
+        })
     }
+    
     onImageUpload(uri){
         this.setState({
             uri:uri,

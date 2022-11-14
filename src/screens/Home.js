@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, InteractionManager } from 'react-native';
 import { FlatList } from 'react-native-web';
 import { db, auth } from '../firebase/config';
+import Post from '../components/Post';
 
 class Home extends Component {
 	constructor(props) {

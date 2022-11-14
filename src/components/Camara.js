@@ -29,7 +29,7 @@ export default class MyCamera extends Component {
         .then( ()=> this.setState({
             permission: true
         }))
-        .catch ( error => console.log(error))
+       
 
     }
 
