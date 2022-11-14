@@ -1,4 +1,5 @@
-/* import React, { Component } from 'react';
+import React, { Component } from 'react';
+import { db , auth } from '../firebase/config'
 
 
 class NewPost extends Component {
@@ -14,7 +15,12 @@ class NewPost extends Component {
             comments:[]
         }
     }
+    crearPost(){
 
+    }
+    render(){
+
+    }
 }
 
-export default NewPost; */
+export default NewPost;
