@@ -3,7 +3,7 @@ import { db , auth } from '../firebase/config'
 import { View, Text, TextInput, TouchableOpacity, } from 'react-native';
 import firebase from 'firebase';
 import Loader from '../components/Loader'
-import MyCamera from '../components/Camara'
+import MyCamera from '../components/Camera'
 import { Camera } from 'expo-camera'
 
 

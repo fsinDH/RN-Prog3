@@ -132,6 +132,6 @@ const styles = StyleSheet.create({
         marginTop: 20
     },
     preview:{
-        height:'80%'
+        height:'200%'
     }
 }) 
