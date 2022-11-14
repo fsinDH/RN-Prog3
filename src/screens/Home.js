@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, InteractionManager } from 'react-native';
+import { FlatList } from 'react-native-web';
 import { db, auth } from '../firebase/config';
 
 class Home extends Component {
@@ -7,6 +8,7 @@ class Home extends Component {
 		super(props);
 		this.state = {
 			users: [],
+			posts:[],
 		};
 	}
 
@@ -26,6 +28,11 @@ class Home extends Component {
 		return (
 			<>
 				<Text> Mi Home </Text>
+				<FlatList 
+					data={this.state.posts}
+					keyExtractor={ post => [post].id}
+					renderItem={({item})=> <Post post={item}/>}
+				/>
 			</>
 		);
 	}
