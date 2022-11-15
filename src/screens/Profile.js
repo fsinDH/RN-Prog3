@@ -7,11 +7,12 @@ import Post from '../components/Post';
 
 
 export default class Profile extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state={
             posts: [],
             loading:true,
+            users: '',
         };
     }
 
@@ -23,6 +24,24 @@ export default class Profile extends Component {
         auth.signOut();
         this.props.navigation.navigate('Register')
 
+    }
+
+    componentDidMount() {
+      db.collection('posts').onSnapshot(
+        docs => {
+        let posts = [];
+        docs.forEach( doc => {
+          posts.push({ 
+            id: doc.id, 
+            data: doc.data() 
+          });
+        
+        });
+        this.setState({ 
+          posts: posts,
+          loading: false
+        });
+      });
     }
 
     render() {
@@ -45,14 +64,14 @@ export default class Profile extends Component {
                     </View>
                 </View>
                 {/* header */}
+                {console.log(this.state.posts)}
+                {/* QUEREMOS QUE SOLO LES PASE LOS DE LA PERSONA */}
                 {this.state.posts.length > 0 ? (
-                    <FlatList
-                    showsHorizontalScrollIndicator={false}
-                    style={StyleSheet.flastlist}
+                  <FlatList 
                     data={this.state.posts}
-                    keyExtractor={(post) => post.id.toString()}
-                    renderItem={(item) => <Post dataPost={item} {...this.props} />}
-                    />
+                    keyExtractor={ post => post.id}
+                    renderItem={({item})=> <Post post={item}/>}
+                  />
                 ) : (
                 <View style={styles.noFlatlist}>
                     <Text style={styles.textBlack}>
@@ -118,7 +137,7 @@ const styles = StyleSheet.create({
       alignItems: "center",
     },
     btn: {
-      backgroundColor: "#ffb703",
+      backgroundColor: "#FF9C33",
       color: "black",
       textAlign: "center",
       padding: 7,
@@ -137,7 +156,7 @@ const styles = StyleSheet.create({
       margin: 30,
     },
     username: {
-      textAlign: "left",
+      textAlign: "center",
       color: "white",
       fontWeight: "600",
       fontSize: 15,

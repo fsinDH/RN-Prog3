@@ -55,6 +55,7 @@ class Post extends Component {
                 />
                 </View>
                 
+                {/* QUE ESTE TEXTO TE LLEVE A OTRA PAGINA QUE DIGA QUIENES LO LIKEARON */}
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
 				{this.state.myLike ? (
 					<TouchableOpacity onPress={() => this.unLike()}>
