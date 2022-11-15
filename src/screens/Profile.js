@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Modal, FlatList, ActivityIndi
 import { auth, db } from '../firebase/config';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { setStatusBarHidden } from 'expo-status-bar';
+import Post from '../components/Post';
 
 
 export default class Profile extends Component {
@@ -12,27 +13,6 @@ export default class Profile extends Component {
             posts: [],
             loading:true,
         };
-    }
-
-    componentDidMount() {
-        db.collection("posts")
-        .where("owner","==", auth.currentUser.email)
-
-        .onSnapshot(
-            (docs) => {
-                let postsAux = [];
-                docs.forEach((doc) => {
-                    postsAux.push({
-                        id: doc.id,
-                        data: doc.data(),
-                    });
-                });
-                this.setState({
-                    posts: postsAux,
-                });
-                console.log(this.state.posts);
-            }
-        );
     }
 
     addPostRedirect() {

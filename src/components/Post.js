@@ -37,15 +37,24 @@ class Post extends Component {
 			)
 			.catch((error) => console.log(error));
 	}
+    
 
 	unLike() {}
 
 	render() {
 		return (
 			<View>
+                {/* NO MUESTRA LA FOTO */}
 				<Text>Post de: {this.props.post.data.owner}</Text>
-				<Text>Texto del Post: {this.props.post.data.description}</Text>
-				<Image></Image>
+                {console.log(this.props.post.data.uri)}
+				<Text>Texto del Post: {this.props.post.data.bio}</Text>
+				<View>
+                <Image 
+                source={{uri:this.props.post.data.uri}}
+                resizeMode="contain"
+                />
+                </View>
+                
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
 				{this.state.myLike ? (
 					<TouchableOpacity onPress={() => this.unLike()}>
