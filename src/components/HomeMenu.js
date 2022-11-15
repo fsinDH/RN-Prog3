@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import NewPost from '../screens/NewPost'
+import Search from '../screens/Search'
+import { Ionicons } from '@expo/vector-icons';
 import {Foundation, Entypo, FontAwesome5 } from '@expo/vector-icons'
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -18,9 +20,12 @@ function HomeMenu() {
 
 			<Tab.Screen name='NewPost' component={NewPost} options= {{tabBarStyle:{backgroundColor:'#FF9C33'}, tabBarIcon: ({focused})=> (<Entypo name="camera" size={24} color={focused?"black":"white"} />) , headerStyle: {backgroundColor: '#FF9C33'}, headerTintColor: '#ggg', headerTitleStyle: {fontWeight: 'bold'},}}/>
 
-			<Tab.Screen name="Profile" component={Profile} options={{tabBarStyle:{backgroundColor:'#FF9C33'} ,tabBarIcon: ({focused}) => (<FontAwesome5 name="user-alt" size={28} color={focused?"black":"white"} />), headerStyle: {backgroundColor: '#FF9C33'}, headerTintColor: '#ggg', headerTitleStyle: {fontWeight: 'bold'},}}/>
+			<Tab.Screen name='Search' component={Search} options={{tabBarStyle:{backgroundColor:'#FF9C33'}, tabBarIcon: ({focused}) => (<Ionicons name="search-sharp" size={24} color={focused?"black":"white"} />), headerStyle: {backgroundColor: '#FF9C33'}, headerTintColor: '#ggg', headerTitleStyle: {fontWeight: 'bold'},}}/>
+
+            <Tab.Screen name='Mi perfil' component={Profile} options={{tabBarStyle:{backgroundColor:'#FF9C33'}, tabBarIcon: ({focused}) => (<FontAwesome5 name="user-alt" size={22} color={focused?"black":"white"} />), headerStyle: {backgroundColor: '#FF9C33'}, headerTintColor: '#ggg', headerTitleStyle: {fontWeight: 'bold'},}}/>
+
+        </Tab.Navigator>
 			
-		</Tab.Navigator>
 	);
 }
 

@@ -8,8 +8,14 @@ class Home extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			users: [],
-			posts:[],
+			loading:true,
+            uri:'',
+            users: [],
+            description:[],
+            userActivo:{},
+            posts:[],
+            likes:[],
+            comments:[],
 		};
 	}
 
