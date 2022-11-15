@@ -39,23 +39,39 @@ class Post extends Component {
 	}
     
 
-	unLike() {}
+	unLike() {
+        db
+			.collection('posts')
+			.doc(this.props.dataPost.id)
+			.update({
+				likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
+			})
+			.then(() =>
+				this.setState({
+					cantidadDeLikes: this.state.cantidadDeLikes - 1,
+					myLike: false,
+				})
+			)
+			.catch((error) => console.log(error));
+    }
+
+    deletePost(id) {
+        db.collection("posts").doc(id).delete()
+    }
+
+	comentar() {
+        console.log("comente")
+    }
 
 	render() {
 		return (
-			<View>
-                {/* NO MUESTRA LA FOTO */}
+			<View style={styles.separator}>
+				<Image
+					source={{uri:this.props.post.data.uri}}
+					resizeMode="contain"
+				/>
 				<Text>Post de: {this.props.post.data.owner}</Text>
-                {console.log(this.props.post.data.uri)}
-				<Text>Texto del Post: {this.props.post.data.bio}</Text>
-				<View>
-                <Image 
-                source={{uri:this.props.post.data.uri}}
-                resizeMode="contain"
-                />
-                </View>
-                
-                {/* QUE ESTE TEXTO TE LLEVE A OTRA PAGINA QUE DIGA QUIENES LO LIKEARON */}
+				<Text>Texto del Post:{this.props.post.data.bio} </Text>
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
 				{this.state.myLike ? (
 					<TouchableOpacity onPress={() => this.unLike()}>
@@ -66,18 +82,39 @@ class Post extends Component {
 						<Text>Like</Text>
 					</TouchableOpacity>
 				)}
+				{
+					this.props.post.data.owner == auth.currentUser.email ? (
+					<TouchableOpacity onPress={() => this.deletePost(this.props.post.data.id)}>
+						<Text>Borrar</Text>
+					</TouchableOpacity>
+					) : (
+						null 
+					)
+				}
+	
+				<TouchableOpacity onPress={() => this.props.navigation.navigate("Comments", {id: this.props.post.data.id})}> 
+					<Text>Comments</Text>
+				</TouchableOpacity>
 			</View>
 		);
 	}
-}
+	}
+	const styles = StyleSheet.create({
+		separator: {
+			borderBottomColor: '#ddd',
+			borderBottomWidth: 1,
+			marginBottom: 10,
+			paddingHorizontal: 20,
+		},
+		image: {
+			width: "100%",
+			height: 200,
+			borderRadius: 12,
+		  },
+	});
+	
 
-const styles = StyleSheet.create({
-	separator: {
-		borderBottomColor: '#ddd',
-		borderBottomWidth: 1,
-		marginBottom: 10,
-		paddingHorizontal: 20,
-	},
-});
 
 export default Post;
+
+
