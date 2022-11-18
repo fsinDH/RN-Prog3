@@ -13,7 +13,8 @@ export default class Search extends Component {
             users: [],
             resultados: [],
             filterBy:'',
-            busqueda: false
+            busqueda: false,
+            sugeridos: [],
         }
     }
 
@@ -29,6 +30,7 @@ export default class Search extends Component {
             this.setState({
             users: users,
             loading:false,
+            sugeridos: users.slice(4),
             })
         })
     }
