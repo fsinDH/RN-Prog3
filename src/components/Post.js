@@ -66,9 +66,9 @@ class Post extends Component {
 	render() {
 		return (
 			<View style={styles.separator}>
-				<Image
+				<Image style={styles.postPicture}
 					source={{uri:this.props.post.data.uri}}
-					resizeMode="contain"
+					
 				/>
 				<Text>Post de: {this.props.post.data.owner}</Text>
 				<Text>Texto del Post:{this.props.post.data.bio} </Text>
@@ -103,14 +103,15 @@ class Post extends Component {
 		separator: {
 			borderBottomColor: '#ddd',
 			borderBottomWidth: 1,
-			marginBottom: 10,
+			marginbottom: 70,
 			paddingHorizontal: 20,
+			padding: 13,
+			border: 100
 		},
-		image: {
-			width: "100%",
-			height: 200,
-			borderRadius: 12,
-		  },
+		postPicture: {
+			width: 383,
+			height: 288
+		}
 	});
 	
 

@@ -41,7 +41,7 @@ class Home extends Component {
 	render() {
 		return (
 			<>
-				<Text> Mi Home </Text>
+				<Text style={styles.title}> My Home </Text>
 				<FlatList 
 					data={this.state.posts}
 					keyExtractor={ post => post.id}
@@ -50,6 +50,16 @@ class Home extends Component {
 			</>
 		);
 	}
-}
+	}
+	const styles = StyleSheet.create({
+		title: {
+			fontSize: 18,
+			fontWeight: 30000
+		},
+		
+	});
+
+
+
 
 export default Home;
