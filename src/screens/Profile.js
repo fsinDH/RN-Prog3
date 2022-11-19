@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Modal, FlatList, ActivityIndicator, } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Modal, FlatList, ActivityIndicator, ScrollView} from 'react-native';
 import { auth, db } from '../firebase/config';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { setStatusBarHidden } from 'expo-status-bar';
@@ -27,7 +27,11 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-      db.collection('posts').onSnapshot(
+      db
+      .collection('posts')
+      /* PARA QUE SOLO APAREZCAN LAS PUBLICACIONES DEL MAIL ABIERTO */
+      .where('owner', '==', auth.currentUser.email)
+      .onSnapshot(
         docs => {
         let posts = [];
         docs.forEach( doc => {
@@ -47,6 +51,7 @@ export default class Profile extends Component {
     render() {
         return (
             <>
+            <ScrollView>
             <View style={StyleSheet.container}>
                 <View style={StyleSheet.header}>
                     <View style={StyleSheet.inLine}>
@@ -86,6 +91,7 @@ export default class Profile extends Component {
               </View>
                 )}
             </View>
+            </ScrollView>
             </>
         );
        
