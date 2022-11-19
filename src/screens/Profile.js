@@ -69,8 +69,6 @@ export default class Profile extends Component {
                     </View>
                 </View>
                 {/* header */}
-                {console.log(this.state.posts)}
-                {/* QUEREMOS QUE SOLO LES PASE LOS DE LA PERSONA */}
                 {this.state.posts.length > 0 ? (
                   <FlatList 
                     data={this.state.posts}

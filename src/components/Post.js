@@ -42,7 +42,7 @@ class Post extends Component {
 	unLike() {
         db
 			.collection('posts')
-			.doc(this.props.dataPost.id)
+			.doc(this.props.post.id)
 			.update({
 				likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
 			})
@@ -71,7 +71,7 @@ class Post extends Component {
 					
 				/>
 				<Text>Post de: {this.props.post.data.owner}</Text>
-				<Text>Texto del Post:{this.props.post.data.bio} </Text>
+				<Text>Texto del Post: {this.props.post.data.bio} </Text>
 				<Text>Cantidad de likes: {this.state.cantidadDeLikes}</Text>
 				{this.state.myLike ? (
 					<TouchableOpacity onPress={() => this.unLike()}>
