@@ -1,156 +1,92 @@
 import React, { Component } from 'react';
 import { ScrollView, StyleSheet, View, TouchableOpacity, TextInput, Text, FlatList} from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { db } from '../firebase/config';
-import { FontAwesome } from '@expo/vector-icons';
-import Loader from '../components/Loader';
+import SearchResults from './SearchResults'; 
 
 export default class Search extends Component {
-    constructor() {
-        super()
-        this.state={
-            loading:true,
+    constructor(props){
+        super(props)
+        this.state = {
+            busqueda: "",
+            resultado: [],
             users: [],
-            resultados: [],
-            filterBy:'',
-            busqueda: false,
-            sugeridos: [],
+            error: "",
+            loading: true,
+            filterBy: '',
         }
-    }
-
-    componentDidMount(){
-        db.collection('users').onSnapshot(docs=>{
-            let users = [];
-            docs.forEach(doc=>{
-            users.push( {
-                id:doc.id, 
-                data:doc.data()})
-    
-        })
+      
+     }
+componentDidMount(){
+    db.collection("users").onSnapshot(
+        users => {
+            let usersFromDb=[]
+            users.forEach((user) => {
+                usersFromDb.push({
+                    id: user.id,
+                    data: user.data()
+                })
+            }) 
             this.setState({
-            users: users,
-            loading:false,
-            sugeridos: users.slice(4),
+                users: usersFromDb
             })
+            
         })
     }
-        
-    filter(filtro){
-        console.log(this.state.resultados)
-        if (this.state.filterBy.length !== 0 ) {
-            let resultadosFiltrados = this.state.users.filter((user) => {return user.data.userName.toLowerCase().includes(filtro.toLowerCase())})
-            this.setState({resultados: resultadosFiltrados})
-            console.log(resultadosFiltrados)  
-            this.setState({
-                filterBy: '',
-                busqueda: true
-        })   
-        }else{
-            this.setState({resultados:[]})
-        } 
-        
-    }
 
-    render (){
-        return(
-           
-            <View>
-                <TextInput
-                    placeholder="Buscar usuarios"
-                    keyboardType="default"
-                    onChangeText={(text)=>{this.busqueda(text)}}>
-                 </TextInput>
-                 <TouchableOpacity onPress={()=>{this.busqueda(this.state.busqueda)}}>
-                    <Text>Buscar</Text>
-                </TouchableOpacity>
-                
-               
-            {this.state.resultados.length === 0?
-                 <>
-                  <Text>Perfiles sugeridos</Text> 
-                  
-                  <FlatList
-                  data={this.state.sugeridos}
-                  keyExtractor={ item => item.id.toString() }
-                  renderItem={ ({item}) => (
-                      <View>
-                      <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
-                         <Text>{item.data.username}</Text>
-                       </TouchableOpacity>
-                      </View>
-                      )}
-                  />
-                </>
-                :  <FlatList
-                data={ this.state.resultados }
-                keyExtractor={ item => item.id.toString() }
-                renderItem={ ({item}) => (
-                    <View>
-                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
-                       <Text>{item.data.username}</Text>
-                     </TouchableOpacity>
-                    </View>
-                    )}
-                    
-        />}
-               
-                
-          
-               
-                       
-                
-            </View>
-                
-            )
+   
+buscador(){
+    if(this.state.busqueda.length > 0){
+        
+        let nuevoArray = this.state.users.filter((user) => {
+          return  user.data.nombreUsuario.includes(this.state.busqueda)}
+        )
+            this.setState({
+                resultado: nuevoArray,
             
-            
-            
-    }
+            }, () => console.log(this.state.resultado))
+    
+            if(this.state.resultado.length== 0) {
+            this.setState({
+            error: "No existen coincidencias para este usuario"
+            })
+            }   
+    } else if(this.state.busqueda.length == 0) {
+        this.setState({
+            error: "Este campo no puede estar vacío"
+        })
+    } 
+      
 }
 
+render() {
+    return (
+        <>
+        {this.state.resultado.length > 0 ?
+        <View>
+            <FlatList
+            data = {this.state.resultado}
+            keyExtractor= {item => item.id}
+            renderItem = { ({item}) => <SearchResults dataUser={item} 
+            {...this.props} />}>
+            </FlatList>
+        </View> : <Text>{this.state.error}</Text>
+        }
+          <View>
+            
+                <TextInput style={{}} placeholder="buscá a tus amigos"
+                onChangeText={(text) => this.setState({busqueda: text})}>
+                </TextInput>
+                <TouchableOpacity onPress = {() => this.buscador()}> 
+                    <Text>buscar</Text>
+                </TouchableOpacity>
+                </View>
+      <View>
+        
+        
 
-const styles = StyleSheet.create({
-    campo: {
-        fontSize:16,
-        borderColor: '#FF9C33',
-        borderWidth:1,
-        borderStyle:'solid',
-        borderRadius:4,
-        marginVertical:8,
-        marginHorizontal:16,
-        padding:8,
-        width:280
-    },
-    container2: {
-        display: 'flex',
-        flexDirection:'row',
-        justifyContent: 'center',
-        marginHorizontal:6,
-    },
-    lupa: {
-        alignSelf: 'center',
-    },
-    leyenda: {
-        color: 'red',
-        marginLeft: 38
-    },
-    listadoUsers: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        marginLeft: 38,
-        marginTop: 5
-    },
-    text: {
-        fontSize: 20,
-        color: 'black',
-        marginBottom: 10,
-        marginTop: 10,
-        alignSelf: 'center'
-    },
-    userName: {
-        fontSize: 15,
-        paddingLeft: 15,
-        alignSelf: 'center'
-    }
-})
+        
+        
+      </View></>
+    )
+  }
+}
