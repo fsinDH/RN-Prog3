@@ -91,10 +91,25 @@ class Post extends Component {
 						null 
 					)
 				}
-	
-				<TouchableOpacity onPress={() => this.props.navigation.navigate("Comments", {id: this.props.post.data.id})}> 
-					<Text>Comments</Text>
-				</TouchableOpacity>
+				{!this.props.post.data.comments.length?
+               
+			   <Text style={styles.text} >No hay comentarios</Text>
+   
+			   : this.props.post.data.comments.length == 1?     
+			   
+			   <TouchableOpacity 
+				   onPress={()=>{this.props.navigation.navigate('Comments', {id: this.props.post.id})}}
+			   >
+			   <Text style={styles.text}>Ver el comentario</Text> 
+			   </TouchableOpacity>
+   
+			   :
+			   <TouchableOpacity 
+				   onPress={()=>{this.props.navigation.navigate('Comments', {id: this.props.post.id})}}
+			   >
+			   <Text style={styles.text} >Ver los {this.props.post.data.comments.length} comentarios</Text>
+			   </TouchableOpacity>
+			   }    
 			</View>
 		);
 	}

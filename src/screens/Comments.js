@@ -22,13 +22,11 @@ export default class Comments extends Component {
         db.collection("posts")
             .doc(this.props.route.params.id)
             .onSnapshot(doc => {
-
+              let coments = doc.data().comments
                 this.setState({
-                    comment: doc.data().comments
+                    comentarios: coments,
                 })
 
-                console.log(this.state.comment)
-                console.log(doc.data().comments)
             })
     }
 
@@ -39,19 +37,18 @@ export default class Comments extends Component {
             /* Guardamos el comentario en el array comments */
             comments: firebase.firestore.FieldValue.arrayUnion({
               owner: auth.currentUser.email,
+              createdAt: Date.now(),
               comentario: this.state.comentario,
             }),
           })
-          .then(() => {
-            this.setState({
-              /* Esto es para borrar del textInput el comentario despues de guardarlo */
-              comentario: "",
-            });
-          });
+          .then((res) => {
+            this.props.navigation.navigate('Comentarios');
+        })
+          .catch( err => console.log(err))
     }
 
   render() {
-    console.log(this.props.route.params.id)
+    console.log(this.state.comentario)
 
     return (
       <>
