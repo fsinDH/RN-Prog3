@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
+import Loader from '../components/Loader'
 
 
 class Register extends Component {
@@ -13,6 +14,7 @@ class Register extends Component {
 			imageUser: '',
 			bio: '',
 			mensajeError: '',
+			loading: true,
 		};
 	}
 
@@ -64,6 +66,7 @@ class Register extends Component {
 
 	render() {
 		return (
+			this.state.loading? <Loader/> :
 			<View style={styles.container}>
 				<Text>Registro</Text>
 				<View>

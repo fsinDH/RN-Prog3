@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { db } from '../firebase/config';
 import { Text, TextInput, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import Loader from '../components/Loader'
 
 export default class Busqueda extends Component {
 
@@ -8,7 +9,7 @@ export default class Busqueda extends Component {
         super(props)
         this.state={
             busqueda:"",
-            cargando:true,
+            loading:true,
             users:[],
             resultados:[],
         }
@@ -23,7 +24,7 @@ export default class Busqueda extends Component {
             console.log(usersFromDB);
             this.setState({
                 users:usersFromDB,
-                cargando:false
+                loading:false
             })
 
             
@@ -58,6 +59,7 @@ export default class Busqueda extends Component {
     
     render() {
         return (
+            this.state.loading? <Loader/> :
             <>
             {this.state.resultados.length > 0 ?
             <View>

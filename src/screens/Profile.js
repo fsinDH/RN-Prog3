@@ -4,6 +4,7 @@ import { auth, db } from '../firebase/config';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { setStatusBarHidden } from 'expo-status-bar';
 import Post from '../components/Post';
+import Loader from '../components/Loader'
 
 
 export default class Profile extends Component {
@@ -50,6 +51,7 @@ export default class Profile extends Component {
 
     render() {
         return (
+          this.state.loading? <Loader/> :
             <>
             <ScrollView>
             <View style={StyleSheet.container}>

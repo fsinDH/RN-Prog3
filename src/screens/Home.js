@@ -3,6 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, InteractionManager
 import { FlatList } from 'react-native-web';
 import { db, auth } from '../firebase/config';
 import Post from '../components/Post';
+import Loader from '../components/Loader'
 
 class Home extends Component {
 	constructor(props) {
@@ -40,6 +41,7 @@ class Home extends Component {
 
 	render() {
 		return (
+			this.state.loading? <Loader/> :
 			<>
 				<Text style={styles.title}> My Home </Text>
 				<FlatList 

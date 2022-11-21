@@ -8,6 +8,7 @@ import {
   } from "react-native";
 import firebase from "firebase";
 import { auth, db } from "../firebase/config";
+import Loader from '../components/Loader'
 
 export default class Comments extends Component {
     constructor(props){
@@ -15,7 +16,8 @@ export default class Comments extends Component {
         this.state={
             userComment: "",
             comments: [],
-            users:[]
+            users:[],
+            loading: true,
         }
     }
 
@@ -53,6 +55,7 @@ export default class Comments extends Component {
     console.log(this.state.userComment)
 
     return (
+      this.state.loading? <Loader/> :
       <>
         <Text> COMMENTS </Text>
 

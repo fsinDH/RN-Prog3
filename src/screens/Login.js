@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { db, auth } from '../firebase/config';
+import Loader from '../components/Loader'
 
 class Login extends Component {
 	constructor() {
@@ -9,6 +10,7 @@ class Login extends Component {
 			email: '',
 			pass: '',
 			mensajeError: '',
+			loading: true,
 		};
 	}
 	loginUser(email, pass) {
@@ -32,6 +34,7 @@ class Login extends Component {
 
 	render() {
 		return (
+			this.state.loading? <Loader/> :
 			<View style={styles.container}>
 				<Text>Ingresar</Text>
 				<View >
