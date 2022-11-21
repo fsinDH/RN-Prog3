@@ -11,8 +11,8 @@ const Stack = createNativeStackNavigator();
 //importar las screens o lo que necesite el menú
 import Login from '../screens/Login';
 import Register from '../screens/Register';
-import Menu from './Menu';
-import Comments from '../screens/Comments';
+import Home from '../screens/Home';
+
 
 class MainNavigation extends Component {
 	constructor(props) {
@@ -31,9 +31,7 @@ class MainNavigation extends Component {
 				<Stack.Navigator>
 					<Stack.Screen options={{ headerShown: false }} name="Register" component={Register} />
 					<Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
-					<Stack.Screen options={{ headerShown: false }} name="Menu" component={Menu} />
-                    <Stack.Screen options={{ headerShown: false }} name="Comments" component={Comments} />
-
+					<Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
 				</Stack.Navigator>
 			</NavigationContainer>
 		);

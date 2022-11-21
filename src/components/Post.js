@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { auth, db } from '../firebase/config';
-import firebase from 'firebase';
+import firebase from 'firebase'; 
+
 
 
 class Post extends Component {
@@ -10,6 +11,7 @@ class Post extends Component {
 		this.state = {
 			cantidadDeLikes: this.props.post.data.likes.length,
 			myLike: false,
+			comments: []
 		};
 	}
 
@@ -59,12 +61,9 @@ class Post extends Component {
         db.collection("posts").doc(id).delete()
     }
 
-	comentar() {
-        console.log("comente")
-    }
-
 	render() {
 		return (
+
 			<View style={styles.separator}>
 				<Image style={styles.postPicture}
 					source={{uri:this.props.post.data.uri}}
@@ -91,10 +90,16 @@ class Post extends Component {
 						null 
 					)
 				}
+
 				{!this.props.post.data.comments.length?
-               
-			   <Text style={styles.text} >No hay comentarios</Text>
-   
+				
+               <TouchableOpacity
+			   onPress={()=>{this.props.navigation.navigate('Comments', {id: this.props.post.id})}}
+			   >
+				<Text style={styles.text} >No hay comentarios</Text>
+			   </TouchableOpacity> 
+			   
+
 			   : this.props.post.data.comments.length == 1?     
 			   
 			   <TouchableOpacity 
@@ -113,6 +118,9 @@ class Post extends Component {
 			</View>
 		);
 	}
+
+	
+
 	}
 	const styles = StyleSheet.create({
 		separator: {
