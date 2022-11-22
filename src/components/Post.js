@@ -84,7 +84,7 @@ class Post extends Component {
 				{
 					this.props.post.data.owner == auth.currentUser.email ? (
 					<TouchableOpacity onPress={() => this.deletePost(this.props.post.data.id)}>
-						<Text>Borrar</Text>
+						<Text>Borrar publicación</Text>
 					</TouchableOpacity>
 					) : (
 						null 
