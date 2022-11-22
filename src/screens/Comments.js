@@ -55,21 +55,27 @@ export default class Comments extends Component {
     console.log(this.state.userComment)
 
     return (
-      this.state.loading? <Loader/> :
+      /* this.state.loading? <Loader/> : */
       <>
-        <Text> COMMENTS </Text>
 
+        
+
+        {/* <FlatList 
+					data={this.state.posts}
+					keyExtractor={ post => post.id}
+					renderItem={({item})=> <Post post={item}{...this.props}/>}
+				/> */}
+        
         <FlatList styles = {styles.comentario}
             data={this.state.userComment}
-            keyExtractor={(userComment) => userComment.id}
+            keyExtractor={userComment => userComment.id}
             renderItem={({ item }) => (
                 <>
-                  <Text>{item.owner}</Text>
-                  <Text>{item.commentText}</Text>
+                  <Text>{item.owner}: {item.commentText}</Text>
                 </>
             )}
         />
-
+        
         <TextInput styles = {styles.comentario}
           keyboardType="default"
           placeholder="Escribe un comentario..."
@@ -84,10 +90,12 @@ export default class Comments extends Component {
         >
           <Text>Comentar</Text>
         </TouchableOpacity>
+    
       </>
-    )
-  }
-}
+    );
+    }}
+  
+
   const styles = StyleSheet.create({
     comentario: {
       overflow: "hidden",
