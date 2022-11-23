@@ -66,9 +66,14 @@ export default class Busqueda extends Component {
                 <FlatList
                 data = {this.state.resultados}
                 keyExtractor= {item => item.id}
-                renderItem = { ({item}) => <SearchResults dataUser={item} 
-                {...this.props} />}>
-                </FlatList>
+                renderItem={ ({item}) => (
+                    <View>
+                    <TouchableOpacity onPress={()=>{this.props.navigation.navigate("Perfil")}}>
+                       <Text>{item.data.username}</Text>
+                     </TouchableOpacity>
+                    </View>
+                    )}
+                />
             </View> : <Text>{this.state.error}</Text>
             }
               <View>
