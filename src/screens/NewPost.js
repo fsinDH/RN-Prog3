@@ -54,6 +54,7 @@ class NewPost extends Component {
         db.collection('posts')
         .add({
             owner: auth.currentUser.email,
+            user: this.currentUser.nombreUsuario,
             bio: this.state.bio,
             createdAt: Date.now(),
             uri:this.state.uri,
