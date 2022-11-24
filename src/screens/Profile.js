@@ -54,29 +54,32 @@ export default class Profile extends Component {
           this.state.loading? <Loader/> :
             <>
             <ScrollView>
-            <View style={StyleSheet.container}>
-                <View style={StyleSheet.header}>
-                    <View style={StyleSheet.inLine}>
-                        <Text style={StyleSheet.username}>
-                            {auth.currentUser.email}
+            <View style={styles.container}>
+                <View style={styles.header}>
+                    <View style={styles.inLine}>
+                        <Text style={styles.username}>
+                            Hola! {auth.currentUser.email}
                         </Text>
                         <TouchableOpacity onPress={() => this.logOut()}>
                             <Ionicons
-                            style={StyleSheet.icon}
+                            style={styles.icon}
                             name="log-out-outline"
-                            size="20px"
-                            color="white"
+                            size="26px"
+                            color="red"
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
                 {/* header */}
                 {this.state.posts.length > 0 ? (
+                  <View>
+                      <Text style={styles.titulos}>Tus Posteos</Text>
                   <FlatList 
                     data={this.state.posts}
                     keyExtractor={ post => post.id}
                     renderItem={({item})=> <Post post={item}/>}
                   />
+                  </View>
                 ) : (
                 <View style={styles.noFlatlist}>
                     <Text style={styles.textBlack}>
@@ -99,17 +102,9 @@ export default class Profile extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-      overflow: "hidden",
-      flex: 1,
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      backgroundColor: "#aaa",
-      color: "#ff9f68",
-    },
+  
     header: {
-      backgroundColor: "#22223b",
+      backgroundColor: 'rgba (255, 0, 25, 56)',
       boxSizing: "border-box",
       width: "100%",
       padding: 10,
@@ -127,6 +122,7 @@ const styles = StyleSheet.create({
     },
     icon: {
       margin: 5,
+      textAlign: "center"
     },
     flatlist: {
       overflow: "hidden",
@@ -163,9 +159,9 @@ const styles = StyleSheet.create({
     },
     username: {
       textAlign: "center",
-      color: "white",
+      color: "black",
       fontWeight: "600",
-      fontSize: 15,
+      fontSize: 20,
       padding: 5,
     },
     modal: {
@@ -182,4 +178,14 @@ const styles = StyleSheet.create({
     paddingLeft: {
       paddingLeft: "5px",
     },
+    titulos: {
+      fontWeight: "700",
+      boxSizing: "border-box",
+      width: "100%",
+      padding: 10,
+      position: "relative",
+      zIndex: 0,
+      flexDirection: "column",
+      textAlign: "center",
+    }
   });

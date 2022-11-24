@@ -6,11 +6,12 @@ import {
     Text, 
     TouchableOpacity,
     StyleSheet,
-    Image
+    Image,
+    unstable_enableLogBox
 } from 'react-native'
 
 import {storage} from '../firebase/config'
-
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class MyCamera extends Component {
 
@@ -71,47 +72,55 @@ export default class MyCamera extends Component {
 
   render() {
     return (
-        <View style={styles.cameraBody}>
+        <View style={styles.container}>
             {
                 this.state.permission ? 
                     this.state.showCamera ?
-                        <View style={styles.cameraBody}>
+                        <View>
                             <Camera 
                                 style={styles.cameraBody}
                                 type={Camera.Constants.Type.back}
                                 ref= {(metodosDeCamara) => this.metodosDeCamara = metodosDeCamara} 
                             />
-
                             <TouchableOpacity 
                                 style={styles.button}
                                 onPress = { ()=>this.tomarFoto()}
                             >
-                                <Text>Tomar Foto</Text>
+                                <Icon
+										name= "camerao"
+										size={30}
+										color= "black"
+									/>
                             </TouchableOpacity>
-                        </View> :
-                        
+                        </View>
+
+                        :
                         <View>
                             {/* Vista previa de la imagen */}
                             <Image 
-                                style={styles.preview}
-                                source={{uri:this.state.uri}}
-                                resizeMode='cover'
-                            />
-                            {/* Guardar fotor */}
-                            <TouchableOpacity 
-                                style={styles.button}
-                                onPress={()=>this.guardarFoto()}
-                            >
-                                <Text>Guardar Foto</Text>
-                            </TouchableOpacity>
-                            {/* Rechazar foto */}
-                            <TouchableOpacity 
-                                style={styles.button}
-                                onPress={()=>this.clearFoto()}
-                            >
-                                <Text>Eliminar</Text>
-                            </TouchableOpacity>
-                        </View> : 
+                                    style={styles.preview}
+                                    source={{uri:this.state.uri}}
+                
+                                />
+                            <View>
+                                {/* Guardar fotor */}
+                                <TouchableOpacity 
+                                    style={styles.previewButton}
+                                    onPress={()=>this.guardarFoto()}
+                                >
+                                    <Text>Guardar Foto</Text>
+                                </TouchableOpacity>
+                                {/* Rechazar foto */}
+                                <TouchableOpacity 
+                                    style={styles.previewButton}
+                                    onPress={()=>this.clearFoto()}
+                                >
+                                    <Text>Eliminar</Text>
+                                </TouchableOpacity>
+                            </View> 
+                        </View>
+                        : 
+                        
                         <Text>No Hay permisos para la camara</Text>
             }
         </View>
@@ -120,18 +129,48 @@ export default class MyCamera extends Component {
 }
 
 const styles = StyleSheet.create({
+    container:{
+        height: 300,
+    },
     cameraBody: {
-        height: '80%',
+            flex: 1,
+			width: "90%",
+            height: "90%",
+			justifyContent: "center",
+			margin: "21px",
+			marginTop: 15,
+			borderRadius: 5,
+			shadowColor: "#000",
+			shadowOffset: {
+				width: 0,
+				height: 2,
+			},
+			shadowOpacity: 2,
+			shadowRadius: 20,
+			elevation: 18,
+			boxSizing: "unset",
+            position: "absolute",
+
     },
     button:{
         height: '20%',
-        borderColor: '#ccc',
-        borderWidth: 1,
-        padding: 5,
-        borderRadius: 4,
-        marginTop: 20
+        marginTop: 337,
+        justifyContent: "center",
+        alignItems: "center"
     },
     preview:{
-        height:'200%'
+        display: 'flex',
+        flexDirection:'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: "300%",
+        width: "100%"
+
+    },
+    previewButton: {
+        padding:8,
+        marginVertical:10,
+        marginHorizontal:16,
     }
+    
 }) 

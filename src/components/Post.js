@@ -94,19 +94,6 @@ class Post extends Component {
 						<Text><strong>{this.props.post.data.owner}</strong></Text> 
 						<Text style={styles.text}>{this.props.post.data.bio} </Text>
 				</View>
-				{
-					this.props.post.data.owner == auth.currentUser.email ? (
-					<TouchableOpacity onPress={() => this.deletePost(this.props.post.data.id)}>
-						<Icon
-							name= "delete"
-							size={20}
-							color= "red"
-						/>
-					</TouchableOpacity>
-					) : (
-						null 
-					)
-				}
 
 				{!this.props.post.data.comments.length?
 				
@@ -132,6 +119,20 @@ class Post extends Component {
 			   <Text style={styles.text} >Ver los {this.props.post.data.comments.length} comentarios</Text>
 			   </TouchableOpacity>
 			   }    
+
+				{
+					this.props.post.data.owner == auth.currentUser.email ? (
+					<TouchableOpacity onPress={() => this.deletePost(this.props.post.data.id)}>
+						<Icon
+							name= "delete"
+							size={20}
+							color= "red"
+						/>
+					</TouchableOpacity>
+					) : (
+						null 
+					)
+				}
 			</View>
 		);
 	}
