@@ -1,16 +1,18 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
 
+//Importar el tipo de menu
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// Guardar la ejecución de Tab
+const Tab = createBottomTabNavigator();
+
+//importar las screens que seran parte del menu
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import NewPost from '../screens/NewPost'
 import Search from '../screens/Search'
 import { Ionicons } from '@expo/vector-icons';
 import {Foundation, Entypo, FontAwesome5 } from '@expo/vector-icons'
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-const Tab = createBottomTabNavigator();
 
 function HomeMenu() {
 	return (
@@ -25,7 +27,6 @@ function HomeMenu() {
             <Tab.Screen name='Mi perfil' component={Profile} options={{tabBarStyle:{backgroundColor:'#FF9C33'}, tabBarIcon: ({focused}) => (<FontAwesome5 name="user-alt" size={22} color={focused?"black":"white"} />), headerStyle: {backgroundColor: '#FF9C33'}, headerTintColor: '#ggg', headerTitleStyle: {fontWeight: 'bold'},}}/>
 
         </Tab.Navigator>
-			
 	);
 }
 

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { db, auth } from '../firebase/config';
 
-//Importar navegaciones
+//Importar contenedor y el tipo de menu
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Guardar la ejecución de Stack
 const Stack = createNativeStackNavigator();
 
-//importar las screens o lo que necesite el menú
+//importar las screens que seran parte del menu
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import Home from '../screens/Home';
@@ -24,8 +23,6 @@ class MainNavigation extends Component {
 	}
 
 	render() {
-		//Stack.Group funciona como React.Fragment y nos permite agrupar Screens.
-
 		return (
 			<NavigationContainer>
 				<Stack.Navigator>
