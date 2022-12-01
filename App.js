@@ -16,9 +16,10 @@ const Stack = createNativeStackNavigator();
 }
 export default function App() {
 	return (
-		<NavigationContainer>
-			<Stack.Navigator>
-				<Stack.Screen options={{ headerShown: false }} name="Register" component={Register} />
+		<NavigationContainer> {/* contiene la estructura de la navegacion */}
+			<Stack.Navigator> {/* define el tipo de navegacion y contiene a la lista de screens */}
+				{/* representan a cada screen que podemos ir */}
+				<Stack.Screen options={{ headerShown: false }} name="Register" component={Register} /> 
 				<Stack.Screen options={{ headerShown: false }} name="Login" component={Login} />
 				<Stack.Screen options={{ headerShown: false }} name="HomeMenu" component={HomeMenu} />
 				<Stack.Screen options={{headerShown:true}} name='Comments' component={Comments}/>

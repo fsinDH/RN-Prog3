@@ -37,11 +37,12 @@ class Register extends Component {
 		
 		// Al registrar un user, queremos guardarlo en la db con email, nombre, biografia e imagen.
 		auth
+			/* Metodo asincronico para crear usuario */
 			.createUserWithEmailAndPassword(email, pass)
 			.then((res) => {
-				db
-					.collection('users')
-					.add({
+				db /* Porque queremos, en este caso agregar cosas a la base de datos */
+					.collection('users') /* Metodo de db para saber en que collecion estas parado */
+					.add({ /* metodo para agregar un informacion en la base de datos */
 						email: email,
 						nombreUsuario: nombreUsuario,
 						imageUser: imageUser,
@@ -70,12 +71,12 @@ class Register extends Component {
 			<View style={styles.container}>
 				<Text>Registro</Text>
 				<View>
-					<TextInput 
+					<TextInput /* representa el campo input de un formulario */
 						style={styles.field} 
 						placeholder="Email" 
-						keyboardType="email-address" 
-						onChangeText={(text) => this.setState({ email: text })} 
-						value={this.state.email} 
+						keyboardType="email-address" /* formato del teclado */
+						onChangeText={(text) => this.setState({ email: text })} /* funcion toma los datos y los mete en el estado */
+						value={this.state.email} /* muestra lo que esta en el estado */
 					/>
 					<TextInput
 						style={styles.field}
@@ -105,6 +106,7 @@ class Register extends Component {
 					{/* Muestra el estado de "mensajeError" */}
 					<Text>{this.state.mensajeError}</Text>
 
+					{/* la estructura de navegacion permite usar las props en componentes hijos para usar la propiedad navigation */}
 					<Text onPress={() => this.props.navigation.navigate('Login')}>Login</Text>
 
 					<TouchableOpacity onPress={() => this.registerUser(this.state.email, this.state.pass, this.state.nombreUsuario, this.state.imageUser, this.state.bio)}>

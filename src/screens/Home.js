@@ -43,9 +43,13 @@ class Home extends Component {
 		return (
 			this.state.loading? <Loader/> :
 			<>
+				{/* Creamos el contenedor scrolleable */}
 				<FlatList 
+					/* Array de datos a recorrer */
 					data={this.state.posts}
+					/* Le da un indicador unico a cada elemento del array */
 					keyExtractor={ post => post.id}
+					/* Componente que renderiza con cada iteracion */
 					renderItem={({item})=> <Post post={item}{...this.props}/>}
 				/>
 			</>
